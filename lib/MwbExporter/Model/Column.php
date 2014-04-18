@@ -237,12 +237,26 @@ class Column extends Base
      */
     public function isUnsigned()
     {
-        $flags = $this->parameters->get('flags');
+        $flags = $this->parameters->get('flags');        
         if (is_array($flags)) {
             return array_key_exists('UNSIGNED', array_flip($flags));
         }
         return false;
     }
+    
+    /**
+     * Trick: map 'BINARY' field attribute to not-existant Doctrine2 annotation 'file' type
+     * 
+     * @return boolean
+     */
+    public function isFile()
+    {
+        $flags = $this->parameters->get('flags');
+        if (is_array($flags)) {
+            return array_key_exists('BINARY', array_flip($flags));
+        }
+        return false;
+    }        
 
     /**
      * Get column default value.
